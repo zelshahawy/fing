@@ -9,7 +9,9 @@
 #![warn(missing_docs)]
 
 mod error;
+mod schema;
 mod value;
 
 pub use error::{ConversionError, Error, Result};
+pub use schema::{Attribute, Constraint, Schema};
 pub use value::{DataType, Value};
