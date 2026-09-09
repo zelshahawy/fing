@@ -14,6 +14,7 @@ mod error;
 mod protocol;
 mod rows;
 mod schema;
+mod sql;
 mod value;
 
 pub use convert::FromValue;
