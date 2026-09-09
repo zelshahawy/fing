@@ -137,10 +137,7 @@ mod tests {
     fn a_trailing_semicolon_is_fine() {
         assert_eq!(inspect("SELECT 1;").unwrap(), StatementKind::Query);
         assert_eq!(inspect("SELECT 1;   ").unwrap(), StatementKind::Query);
-        assert_eq!(
-            inspect("SELECT 1; -- done").unwrap(),
-            StatementKind::Query
-        );
+        assert_eq!(inspect("SELECT 1; -- done").unwrap(), StatementKind::Query);
     }
 
     #[test]
@@ -199,10 +196,7 @@ mod tests {
             inspect("SELECT 1 -- ; not a statement").unwrap(),
             StatementKind::Query
         );
-        assert_eq!(
-            inspect("/* ; */ SELECT 1").unwrap(),
-            StatementKind::Query
-        );
+        assert_eq!(inspect("/* ; */ SELECT 1").unwrap(), StatementKind::Query);
     }
 
     #[test]
@@ -225,7 +219,10 @@ mod tests {
     #[test]
     fn empty_input_is_rejected() {
         assert!(matches!(inspect(""), Err(Error::InvalidArgument(_))));
-        assert!(matches!(inspect("  \n -- hi"), Err(Error::InvalidArgument(_))));
+        assert!(matches!(
+            inspect("  \n -- hi"),
+            Err(Error::InvalidArgument(_))
+        ));
         assert!(matches!(inspect(";"), Err(Error::InvalidArgument(_))));
     }
 

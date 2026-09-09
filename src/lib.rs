@@ -8,6 +8,7 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
 
+mod client;
 mod codec;
 mod convert;
 mod error;
@@ -17,6 +18,7 @@ mod schema;
 mod sql;
 mod value;
 
+pub use client::{Client, ClientBuilder, Outcome};
 pub use convert::FromValue;
 pub use error::{ConversionError, Error, Result};
 pub use protocol::PagingInfo;
