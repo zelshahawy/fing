@@ -12,11 +12,13 @@ mod codec;
 mod convert;
 mod error;
 mod protocol;
+mod rows;
 mod schema;
 mod value;
 
 pub use convert::FromValue;
 pub use error::{ConversionError, Error, Result};
 pub use protocol::PagingInfo;
+pub use rows::{ColumnIndex, Row, RowIter, Rows};
 pub use schema::{Attribute, Constraint, Schema};
 pub use value::{DataType, Value};
