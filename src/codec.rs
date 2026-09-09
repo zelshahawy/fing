@@ -67,6 +67,45 @@ mod tests {
         out
     }
 
+    /// Real bytes from a real server. Regenerate with `tests/capture_fixture.rs`.
+    ///
+    /// This is what catches our mirrored types drifting from FairyDB's `common`
+    /// crate: everything else in the suite only proves we agree with ourselves.
+    #[test]
+    fn a_captured_server_response_decodes() {
+        use crate::value::{DataType, Value};
+
+        const CAPTURED: &[u8] = include_bytes!("../tests/fixtures/select_response.cbor");
+        let mut frame = (CAPTURED.len() as u64).to_be_bytes().to_vec();
+        frame.extend_from_slice(CAPTURED);
+
+        let response = read_response(&mut std::io::Cursor::new(frame)).unwrap();
+        let Response::QueryResult(QueryResult::Select { schema, result, .. }) = response else {
+            panic!("expected a select result, got {response:?}");
+        };
+
+        let columns = schema.columns();
+        assert_eq!(columns.len(), 2);
+        assert_eq!(columns[0].name, "id");
+        assert_eq!(columns[0].dtype, DataType::BigInt);
+        assert!(columns[0].is_primary_key());
+        assert_eq!(columns[1].name, "name");
+        assert_eq!(columns[1].dtype, DataType::String);
+
+        assert_eq!(result.len(), 2);
+        // The server drops value_id on the way out, so this must decode as None
+        // rather than failing for a missing field.
+        assert_eq!(result[0].value_id, None);
+        assert_eq!(
+            result[0].field_vals,
+            vec![Value::BigInt(1), Value::String("alice".into())]
+        );
+        assert_eq!(
+            result[1].field_vals,
+            vec![Value::BigInt(2), Value::String("Ziad".into())]
+        );
+    }
+
     #[test]
     fn requests_are_written_without_a_length_prefix() {
         let command = CommandWithArgs::db(DBCommand::ExecuteSQL, vec!["SELECT 1".into()]);
