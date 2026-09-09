@@ -157,10 +157,10 @@ impl<'a> Row<'a> {
         let index = column.index_in(self.schema)?;
         let value = &self.values[index];
         T::from_value(value).map_err(|source| Error::Conversion {
-            column: self.schema.column(index).map_or_else(
-                || index.to_string(),
-                |attribute| attribute.name.clone(),
-            ),
+            column: self
+                .schema
+                .column(index)
+                .map_or_else(|| index.to_string(), |attribute| attribute.name.clone()),
             source,
         })
     }
@@ -348,10 +348,7 @@ mod tests {
     fn out_of_range_columns_report_the_row_width() {
         let rows = sample();
         let err = rows.get(0).unwrap().get::<i64>(9usize).unwrap_err();
-        assert!(matches!(
-            err,
-            Error::ColumnOutOfRange { index: 9, len: 2 }
-        ));
+        assert!(matches!(err, Error::ColumnOutOfRange { index: 9, len: 2 }));
     }
 
     #[test]
