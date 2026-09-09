@@ -9,9 +9,11 @@
 #![warn(missing_docs)]
 
 mod error;
+mod protocol;
 mod schema;
 mod value;
 
 pub use error::{ConversionError, Error, Result};
+pub use protocol::PagingInfo;
 pub use schema::{Attribute, Constraint, Schema};
 pub use value::{DataType, Value};
