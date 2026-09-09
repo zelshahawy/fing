@@ -9,11 +9,13 @@
 #![warn(missing_docs)]
 
 mod codec;
+mod convert;
 mod error;
 mod protocol;
 mod schema;
 mod value;
 
+pub use convert::FromValue;
 pub use error::{ConversionError, Error, Result};
 pub use protocol::PagingInfo;
 pub use schema::{Attribute, Constraint, Schema};
