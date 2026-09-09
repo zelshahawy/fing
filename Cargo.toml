@@ -2,5 +2,23 @@
 name = "fing"
 version = "0.1.0"
 edition = "2024"
+rust-version = "1.85"
+description = "A Rust client library for FairyDB — connect, run SQL, and read typed results."
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+keywords = ["fairydb", "database", "sql", "client", "oltp"]
+categories = ["database"]
 
 [dependencies]
+serde = { version = "1", features = ["derive"] }
+# Pinned to the same codec the FairyDB server and cli-fairy use, so our encoding
+# is byte-compatible by construction. Keep all use of it inside `codec`.
+serde_cbor = "0.11"
+chrono = { version = "0.4", optional = true, default-features = false, features = [
+    "std",
+] }
+
+[features]
+default = []
+# Adds `FromValue` impls for `chrono::NaiveDate` on DATE columns.
+chrono = ["dep:chrono"]
