@@ -9,5 +9,7 @@
 #![warn(missing_docs)]
 
 mod error;
+mod value;
 
 pub use error::{ConversionError, Error, Result};
+pub use value::{DataType, Value};
