@@ -6,3 +6,6 @@
 # already existing elements were commented out
 
 #/target
+
+# Local Claude Code settings
+.claude/settings.local.json
