@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/ziadelshahawy/personal/project/**)",
+      "Read(//Users/ziadelshahawy/**)",
+      "Bash(cargo build *)",
+      "Bash(rustc --version)",
+      "Bash(cargo --version)",
+      "Bash(sed -n '/impl std::fmt::Display for Field/,/^}/p' src/datatypes.rs)",
+      "Bash(cd *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m ' *)",
+      "Bash(cargo test *)",
+      "Bash(sed -i '' 's/^mod codec;/mod client;\\\\nmod codec;/' src/lib.rs)",
+      "Bash(sed -i '' 's/^pub use convert::FromValue;/pub use client::{Client, ClientBuilder, Outcome};\\\\npub use convert::FromValue;/' src/lib.rs)",
+      "Bash(cargo clippy *)",
+      "Bash(cargo fmt *)",
+      "Bash(FING_TEST_ADDR=127.0.0.1:3399 cargo test --test live -- --ignored --test-threads=1)",
+      "Bash(cargo run *)",
+      "Bash(FING_TEST_ADDR=127.0.0.1:3399 cargo test --test capture_fixture -- --ignored --nocapture)",
+      "Bash(xxd tests/fixtures/select_response.cbor)"
+    ]
+  }
+}
